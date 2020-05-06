@@ -12,6 +12,6 @@ app.listen(PORT, ()=>{
 
 router.get('/', (req, res)=>{
 
-    res.json({message : 'you are here'})
+    res.send('fuck you')
 
 })
