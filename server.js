@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 
 
-
+//routers
 const feedRouter = require('./routes/feed')
 app.use('/feed', feedRouter)
 const userRouter = require('./routes/user')
