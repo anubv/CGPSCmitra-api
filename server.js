@@ -10,7 +10,9 @@ const feedRouter = require('./routes/feed')
 app.use('/feed', feedRouter)
 const userRouter = require('./routes/user')
 app.use('/users', userRouter)
-
+app.get('/', (req,res)=>{
+    res.send("you are welcome!")
+} )
 
 
 app.listen(PORT, ()=>{
