@@ -13,11 +13,12 @@ const employeeRouter = require('./routes/employees')
 app.use('/employees', employeeRouter)
 app.get('/', (req,res)=>{
     res.send("you are welcome!")
-} )
+})
+
 
 
 //db
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
+mongoose.connect(process.env.DATABASE_URL , {useNewUrlParser: true})
 const db = mongoose.connection
 db.on('error', (error)=> console.error(error))
 db.once('open', ()=> console.log('connected to montyDatabase'))
