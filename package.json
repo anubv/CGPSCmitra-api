@@ -1,25 +1,19 @@
 {
   "name": "testheroku",
   "version": "1.0.0",
+  "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "devstart": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.12",
+    "mongoose": "^5.9.12"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.4"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anubv/CGPSCmitra-api.git"
-  },
-  "bugs": {
-    "url": "https://github.com/anubv/CGPSCmitra-api/issues"
-  },
-  "homepage": "https://github.com/anubv/CGPSCmitra-api#readme",
-  "description": ""
+  }
 }
