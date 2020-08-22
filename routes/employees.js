@@ -27,14 +27,14 @@ employeeRouter.get('/', async (req, res) => {
     let employee
     try {
         const after = req.body.after
-        const before = req.body.before
+        const pageSize = after + req.body.before
         if (after && before == null) {
             employees = await Employee.find()
         } else {
             employees = await Employee.find({
                 id: {
                     $gt: after,
-                    $lt: before
+                    $lt: pageSize
                 }
             })
         }
