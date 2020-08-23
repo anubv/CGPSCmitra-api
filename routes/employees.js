@@ -27,17 +27,14 @@ employeeRouter.get('/', async (req, res) => {
     let employee
     try {
         const after = req.body.after
-        const pageSize = after + req.body.before
-        if (after && before == null) {
-            employees = await Employee.find()
-        } else {
-            employees = await Employee.find({
-                id: {
-                    $gt: after,
-                    $lt: pageSize
-                }
-            })
-        }
+        const before = after + req.body.pagesize
+        
+        employees = await Employee.find({
+            id: {
+                $gt: after,
+                $lt: before
+            }
+        })
         if (employees == null)
             res.status(404).json({
                 message: '404 not found'
@@ -45,9 +42,7 @@ employeeRouter.get('/', async (req, res) => {
         else
             res.json(employees)
     } catch (error) {
-        res.status(500).json({
-            message: "Can't connect to database"
-        })
+        res.status(500).json({ error })
     }
 })
 
