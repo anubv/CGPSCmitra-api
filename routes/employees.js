@@ -26,9 +26,9 @@ employeeRouter.get('/all', async (req, res) => {
 employeeRouter.get('/', async (req, res) => {
     let employee
     try {
-        const after = req.body.after
-        const before = after + req.body.pagesize
-        
+        var after = parseInt(req.query.after)
+        var before = parseInt(req.query.pagesize) + after
+
         employees = await Employee.find({
             id: {
                 $gt: after,
