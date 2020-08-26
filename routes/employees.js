@@ -3,6 +3,23 @@ const employeeRouter = express.Router();
 const Employee = require('../models/employee')
 
 
+
+//get count
+employeeRouter.get('/count', async (req, res)=>{
+    try {
+        let countEmployees
+            countEmployees = await Employee.count()
+        if(countEmployees==null){
+            res.status(404).json({message: "can't count the number"})
+        }
+            res.json(countEmployees)
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+
+})
+
 //get all
 employeeRouter.get('/all', async (req, res) => {
     try {
