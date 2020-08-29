@@ -3,57 +3,21 @@ const employeeRouter = express.Router();
 const Employee = require('../models/employee')
 
 
-
-//get count
-employeeRouter.get('/count', async (req, res)=>{
-    try {
-        let countEmployees
-            countEmployees = await Employee.count()
-        if(countEmployees==null){
-            res.status(404).json({message: "can't count the number"})
-        }
-            res.json(countEmployees)
-
-    } catch (error) {
-        res.status(500).json(error)
-    }
-
-})
-
-//get all
-employeeRouter.get('/all', async (req, res) => {
-    try {
-        const employees = await Employee.find()
-        if (employees == null) {
-            res.status(404).json({
-                message: "no users found"
-            })
-        } else {
-            res.json(employees)
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: "Can't connect to database"
-        })
-    }
-
-})
-
 //get from-to list of employees
 employeeRouter.get('/', async (req, res) => {
     let employee
     try {
-        var after = parseInt(req.query.after)+1
-        var till = after - parseInt(req.query.pagesize) -1
-        if(till<0)
-            till=0
-
+        var from = parseInt(req.query.from)
+        var pagesize = parseInt(req.query.pagesize)
+        if (from==-1){
+        employees = await Employee.find().limit(pagesize).sort({$natural:-1})
+    }else{
         employees = await Employee.find({
             id: {
-                $gt: till,
-                $lt: after
+                $lte: from
             }
-        })
+    }).limit(pagesize).sort({$natural:-1})
+    }
         if (employees == null)
             res.status(404).json({
                 message: '404 not found'
@@ -64,6 +28,7 @@ employeeRouter.get('/', async (req, res) => {
         res.status(500).json({ error })
     }
 })
+
 
 //post 
 employeeRouter.post('/', async (req, res) => {
@@ -81,11 +46,6 @@ employeeRouter.post('/', async (req, res) => {
     }
 })
 
-//update one
-employeeRouter.patch('/:id', (req, res) => [
-
-])
-
 //delete one
 employeeRouter.delete('/:id', async (req, res) => {
 
@@ -93,29 +53,6 @@ employeeRouter.delete('/:id', async (req, res) => {
     res.json(employee)
 
 })
-
-
-async function getEmployee(req, res, next) {
-
-    let employee
-    try {
-        employee = Employee.findById(req.params.id)
-        if (employee == null) {
-            res.status(404).json({
-                message: "Employee not Found"
-            })
-        }
-        else
-            res.employee = employee
-
-    } catch (error) {
-        res.status(500).json({
-            message: "Can't connect to Database"
-        })
-    }
-
-    next()
-}
 
 
 module.exports = employeeRouter;
